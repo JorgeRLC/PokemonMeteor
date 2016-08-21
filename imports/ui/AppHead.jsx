@@ -13,11 +13,7 @@ class AppHead extends Component {
                       <a className="brand-logo">Pokemon</a>
                       <ul className="right">
                           { this.props.menu == 'Home'?
-                              <li>
-                                  <a href="/form">
-                                      Formulario
-                                  </a>
-                              </li>
+                              ''
                               :
                               <li>
                                   <a href="/">
@@ -36,6 +32,7 @@ class AppHead extends Component {
 }
 
 AppHead.propTypes = {
+    params: PropTypes.object,
     menu: PropTypes.string.isRequired,
     currentUser: PropTypes.object,
 };

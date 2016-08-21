@@ -13,9 +13,9 @@ MainLayout = React.createClass({
       
     return (
         <div>
-          <AppHead menu={this.props.menu}/>
+          <AppHead menu={this.props.menu} params={this.props.params}/>
           <div className="row">
-            <AppBody menu={this.props.menu}/>
+            <AppBody menu={this.props.menu} params={this.props.params}/>
           </div>
         </div>
     );

@@ -3,20 +3,22 @@ import { Meteor } from 'meteor/meteor';
 
 // Task component - represents a single todo item
 export default class PokemonCard extends Component {
+    imgPokemon(){
+        return 'thm/'+ this.props.pokemon.img +'.png';
+    }
     render() {
         return (
-                <div className="col s12 m4 l2">
+                <div className="col s6 m3 l2">
                     <div className="card small">
-                        <div className="card-title s8">
-                            {this.props.pokemon.name}
+                        <div className="card-panel blue">
+                           <h6 className="white-text"> {this.props.pokemon.name} </h6>
                         </div>
-                        <div className="card-image">
-                            <img src={this.props.pokemon.img} alt=""/>
+                        <div className="center-align">
+                            <img height="120" width="120" src={this.imgPokemon()}/>
                         </div>
                         <div className="card-content">
-                            <div >{this.props.pokemon.type}</div>
-                        </div>
-                        <div className="card-action">
+                            <div >{this.props.pokemon.types}</div>
+                            <a href={'Form/' + this.props.pokemon._id}>Editar</a>
                         </div>
                     </div>
                 </div>
@@ -26,7 +28,5 @@ export default class PokemonCard extends Component {
 
 
 PokemonCard.propTypes = {
-  // This component gets the task to display through a React prop.
-  // We can use propTypes to indicate it is required
     pokemon: PropTypes.object.isRequired
 };

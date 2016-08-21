@@ -1,33 +1,46 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
-// Task component - represents a single todo item
-export default class FormPokemon extends Component {
+
+class FormPokemon extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.name.value);
-        Meteor.call('pokemonType.insert',
-            this.number.value,
-            this.name.value,
-            this.typeP.value,
-            this.levelE.value,
-            this.evolution.value,
-            this.imageP.value,
-        );
+        Meteor.call('PokemonsList.update', this.props.pokemon._id,
+            {
+                name: this.name.value,
+                img: this.img.value
+            });
+    }
+    handleRestore() {
+        m = Meteor.subscribe('PokemonsList.rest', this.props.pokemon._id);
+        console.log(m);
     }
     render() {
         return (
-            <form className="col s12" onSubmit={this.handleSubmit.bind(this)}>
-                <label>Número del Pokemon</label><input type="number" ref={(ref) => this.number = ref}/>
-                <label>Nombre</label><input type="text" ref={(ref) => this.name = ref}/>
-                <label>Tipo</label><input type="text" ref={(ref) => this.typeP = ref}/>
-                <label>Foto </label><input type="text" ref={(ref) => this.imageP = ref}/>
-                <label>Nivel de evolución</label><input type="number" ref={(ref) => this.levelE = ref}/>
-                <label>Evolución del Pokemon</label><input type="text" ref={(ref) => this.evolution = ref}/>
-                <button className="btn waves-effect waves-light blue" type="submit" name="action">Submit
-                    <i className="material-icons right">send</i>
+            <div>
+                <form className="col s12" onSubmit={this.handleSubmit.bind(this)}>
+                    <label>Nombre</label><input type="text" defaultValue={this.props.pokemon.name} ref={(ref) => this.name = ref}/>
+                    <label>Foto </label><input type="text" defaultValue={this.props.pokemon.img} ref={(ref) => this.img = ref}/>
+                    <button className="btn waves-effect waves-light blue" type="submit" name="action">Submit
+                        <i className="material-icons right">send</i>
+                    </button>
+                </form>
+                <button className="btn waves-effect waves-light blue" onClick={this.handleRestore.bind(this)} name="action">Restaurar
+                    <i className="material-icons right"  >restore</i>
                 </button>
-            </form>
+            </div>
         );
     }
 }
+
+FormPokemon.propTypes = {
+    pokemon: PropTypes.object.isRequired,
+};
+
+export default createContainer(() => {
+    return {
+
+    };
+}, FormPokemon);
