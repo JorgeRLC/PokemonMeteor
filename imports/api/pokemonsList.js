@@ -9,6 +9,16 @@ if (Meteor.isServer) {
         Meteor.call('PokemonsList.Restore', id);
         return 'OK';
     });
+    
+    Meteor.publish('PokemonsList', function () {
+        //var pokemon = PokemonsList.findOne({_id: id});
+        return PokemonsList.find();
+    });
+    
+    Meteor.publish('PokemonGet', function (id) {
+        //var pokemon = PokemonsList.findOne({_id: id});
+        return PokemonsList.findOne({_id: id});
+    });
 }
 
 Meteor.methods({
@@ -22,10 +32,6 @@ Meteor.methods({
             evolution: pokemon.evolutions,
             createdAt: new Date()
         });
-    },
-    'PokemonsList.show'(id) {
-        check(id, String);
-        return PokemonsList.findOne({_id: id});
     },
     'PokemonsList.remove'(id) {
         check(id, String);

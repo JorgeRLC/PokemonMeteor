@@ -6,6 +6,12 @@ export default class PokemonCard extends Component {
     imgPokemon(){
         return 'thm/'+ this.props.pokemon.img +'.png';
     }
+    handleCatch(){
+        Meteor.call('Pokemons.insert', 
+            this.props.pokemon.index,
+            this.props.pokemon.name,
+        );
+    }
     render() {
         return (
                 <div className="col s6 m3 l2">
@@ -18,7 +24,16 @@ export default class PokemonCard extends Component {
                         </div>
                         <div className="card-content">
                             <div >{this.props.pokemon.types}</div>
-                            <a href={'Form/' + this.props.pokemon._id}>Editar</a>
+                            { this.props.isUser ?
+                                <div>
+                                    <a className="btn-floating red right" onClick={this.handleCatch.bind(this)}>
+                                        <i className="material-icons">album</i>
+                                    </a>
+                                <a href={'Form/'+this.props.pokemon._id} > Editar </a>
+                                </div>
+                                : 
+                                ''
+                            }
                         </div>
                     </div>
                 </div>
@@ -28,5 +43,6 @@ export default class PokemonCard extends Component {
 
 
 PokemonCard.propTypes = {
-    pokemon: PropTypes.object.isRequired
+    pokemon: PropTypes.object.isRequired,
+    isUser: PropTypes.bool,
 };
