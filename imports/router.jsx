@@ -21,4 +21,14 @@ FlowRouter.route('/form/:id', {
     }
 });
 
+FlowRouter.route('/pokelist', {
+    action: function(params, queryParams) {
+        console.log("Pokelist");
+        mount(MainLayout, {
+            menu: 'Pokelist',
+            params: params
+        });
+    }
+});
+
 

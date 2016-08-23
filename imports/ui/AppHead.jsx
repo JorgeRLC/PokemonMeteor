@@ -13,7 +13,11 @@ class AppHead extends Component {
                       <a className="brand-logo">Pokemon</a>
                       <ul className="right">
                           { this.props.menu == 'Home'?
-                              ''
+                              <li>
+                                  <a href="/pokelist">
+                                      Lista
+                                  </a>
+                              </li>
                               :
                               <li>
                                   <a href="/">

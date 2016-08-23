@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Pokemons } from './pokemons.js';
 
 export const PokemonsList = new Mongo.Collection('pokemonsList');
 
@@ -11,13 +12,15 @@ if (Meteor.isServer) {
     });
     
     Meteor.publish('PokemonsList', function () {
-        //var pokemon = PokemonsList.findOne({_id: id});
         return PokemonsList.find();
     });
     
-    Meteor.publish('PokemonGet', function (id) {
-        //var pokemon = PokemonsList.findOne({_id: id});
-        return PokemonsList.findOne({_id: id});
+    Meteor.publish('PokemonListUser', function (id) {
+        ind = [];
+        Pokemons.find({owner: this.userId}).map((poke)=>{
+            ind[ind.length] = poke.index;
+        });
+        return PokemonsList.find({index: ind});
     });
 }
 
@@ -35,7 +38,6 @@ Meteor.methods({
     },
     'PokemonsList.remove'(id) {
         check(id, String);
-
         PokemonsList.remove(id);
     },
     'PokemonsList.update'(id,data) {
